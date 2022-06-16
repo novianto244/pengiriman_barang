@@ -37,4 +37,21 @@
 		return $user;
 	}
 
+    function create_log($tipe, $query_type, $sql, $user){
+		/* ::::::: Get IP Address ::::::: */
+		if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
+			$ip = $_SERVER['HTTP_CLIENT_IP'];  
+		}elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
+			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+		}else{  
+			$ip = $_SERVER['REMOTE_ADDR'];  
+		}  
+
+		/* ::::::: Get Link ::::::: */
+		$link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+		/* ::::::: Create Log ::::::: */
+        $log =  date("Y/m/d")."|".date('H:i:s')."|".$ip."|".$tipe."|".$query_type."|".$user."|".$link."|".$sql."\n".PHP_EOL;
+        file_put_contents('./log/scr_log_'.date("j.n.Y").'.txt', $log, FILE_APPEND);
+    }
 ?>
