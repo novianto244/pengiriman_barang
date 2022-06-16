@@ -25,7 +25,14 @@ class IndexController extends Controller
                 ];
                 return view('dashboard', compact('data'));
                 break;
-        }
+            case 'surat_jalan':
+                $data = [
+                    'judul' => 'Surat Jalan',
+                    'nik' => $nik
+                ];
+                return view('surat_jalan', compact('data'));
+                break;
+            }
 
 
     }
