@@ -12,6 +12,7 @@ Route::group(['middleware' => 'checklogin'], function () {
      // Logout
      Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-
+     // Menu
+     Route::get('dashboard-{role}', [IndexController::class, 'index']);
      
 });
