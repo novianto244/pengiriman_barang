@@ -14,5 +14,6 @@ Route::group(['middleware' => 'checklogin'], function () {
 
      // Menu
      Route::get('dashboard-{role}', [IndexController::class, 'index']);
+     Route::get('surat_jalan-{role}', [IndexController::class, 'index']);
      
 });

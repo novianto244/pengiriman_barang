@@ -12,8 +12,7 @@
             <input type="text" id="nik_user" value="<?php echo $data['nik'] ?>" hidden readonly/>    
         </div>
         <a class="list-group-item list-group-item-action bg-light" id="dashboard"><i class="fa fa-home" style="color:#17a2b8; margin-right:-1px;"></i>Dashboard</a>
-        <a class="list-group-item list-group-item-action bg-light" id="bukti_potong"><i class="fa fa-tag" style="color:#17a2b8; margin-right:1px;"></i>Bukti Potong</a>
-        <a class="list-group-item list-group-item-action bg-light" id="list_journal"><i class="fa fa-list" style="color:#17a2b8; margin-right:1px;"></i>List Journal</a>
+        <a class="list-group-item list-group-item-action bg-light" id="surat_jalan"><i class="fa fa-dolly-flatbed" style="color:#17a2b8; margin-right:-3px;"></i>Surat Jalan</a>
     </div>
     
 <script>
@@ -39,8 +38,7 @@
         }
 
         $('#dashboard').css('cursor', 'pointer');
-        $('#bukti_potong').css('cursor', 'pointer');
-        $('#list_journal').css('cursor', 'pointer');
+        $('#surat_jalan').css('cursor', 'pointer');
 
         $('#dashboard').click(function () {  
             window.location.href='dashboard-' + 
@@ -50,18 +48,10 @@
             ];
         });
 
-        $('#bukti_potong').click(function () {  
-            window.location.href='bukti_potong-' + 
+        $('#surat_jalan').click(function () {  
+            window.location.href='surat_jalan-' + 
             [
-                'bukti_potong',
-                $('#nik').val()
-            ];
-        });
-
-        $('#list_journal').click(function () {  
-            window.location.href='list_journal-' + 
-            [
-                'list_journal',
+                'surat_jalan',
                 $('#nik').val()
             ];
         });
