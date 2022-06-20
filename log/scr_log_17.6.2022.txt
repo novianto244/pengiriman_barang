@@ -12,3 +12,5 @@
 
 2022/06/17|15:21:41|127.0.0.1|LOGIN|SELECT|novianto_it|http://localhost/pengiriman_barang/login|SELECT * FROM drc.t_user WHERE username='novianto_it' AND password='4297f44b13955235245b2497399d7a93'
 
+2022/06/17|17:22:18|127.0.0.1|LOGIN|SELECT|novianto_it|http://localhost/pengiriman_barang/login|SELECT * FROM drc.t_user WHERE username='novianto_it' AND password='4297f44b13955235245b2497399d7a93'
+
