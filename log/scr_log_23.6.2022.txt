@@ -1,0 +1,8 @@
+2022/06/23|08:09:44|127.0.0.1|LOGIN|SELECT|novianto_it|http://localhost/pengiriman_barang/login|SELECT * FROM drc.t_user WHERE username='novianto_it' AND password='4297f44b13955235245b2497399d7a93'
+
+2022/06/23|08:40:55|127.0.0.1|LOGIN|SELECT|novianto_it|http://localhost/pengiriman_barang/login|SELECT * FROM drc.t_user WHERE username='novianto_it' AND password='4297f44b13955235245b2497399d7a93'
+
+2022/06/23|11:54:35|127.0.0.1|LOGIN|SELECT|novianto_it|http://localhost/pengiriman_barang/login|SELECT * FROM drc.t_user WHERE username='novianto_it' AND password='4297f44b13955235245b2497399d7a93'
+
+2022/06/23|11:55:17|127.0.0.1|LOGIN|SELECT|novianto_it|http://localhost/pengiriman_barang/login|SELECT * FROM drc.t_user WHERE username='novianto_it' AND password='4297f44b13955235245b2497399d7a93'
+

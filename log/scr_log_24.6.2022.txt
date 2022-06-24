@@ -1,0 +1,2 @@
+2022/06/24|08:10:22|127.0.0.1|LOGIN|SELECT|novianto_it|http://localhost/pengiriman_barang/login|SELECT * FROM drc.t_user WHERE username='novianto_it' AND password='4297f44b13955235245b2497399d7a93'
+

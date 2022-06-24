@@ -13,20 +13,23 @@ class Pengiriman extends Model
         'pengiriman_id',
         'bbk_id',
         'kendaraan_id',
-        'driver_id',
+        'nik',
+        'nama_surat_jalan',
+        'tanggal_surat_jalan',
+        'project_id',
         'status_delete',
         'created_date',
         'created_by',
         'updated_date',
         'updated_by',
         'deleted_date',
-        'deleted_by'
+        'deleted_by',
     ];
 
     protected $table = "t_pengiriman";
     protected $primaryKey = "pengiriman_id";
     // protected $keyType = 'string';
 
-    public $incrementing = false;
+    public $incrementing = true;
     public $timestamps = false;
 }

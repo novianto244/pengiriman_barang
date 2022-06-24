@@ -7,6 +7,51 @@ use PhpOffice\PhpSpreadsheet\Calculation\Financial\CashFlow\Single;
 
 trait Getdata
 {   
+    public function getloaddata($id, $tipe, $total){
 
+        $bagianWhere = "";
+        if(!empty($id)){
+            $bagianWhere .= "t1.pengiriman_id < '".$id."' AND t1.status_delete=0";
+        }else{
+            $bagianWhere .= "t1.status_delete=0";
+        }
+
+        if(!empty($tipe)){
+            $bagianWhere .= " AND t3.status_pengiriman='".$tipe."'";
+        }
+
+        if($total=="TOTAL"){
+            $limit = '';
+        }else{
+            $limit = 'LIMIT 2';
+        }
+
+        $sqlQuery = "SELECT * FROM drc.t_pengiriman AS t1
+
+                    LEFT JOIN
+                    (SELECT max(pengiriman_detail_id) as pengiriman_detail_id, pengiriman_id as pengirimanid, status_delete as statusdelete
+                    FROM t_pengiriman_detail
+                    WHERE status_delete =0
+                    GROUP BY pengirimanid ) AS t2
+                    ON t1.pengiriman_id = t2.pengirimanid
+                    
+                    LEFT JOIN
+                    (SELECT pengiriman_detail_id as pengirimandetailid, status_pengiriman, created_date as created_detail
+                    FROM t_pengiriman_detail) AS t3
+                    ON t2.pengiriman_detail_id = t3.pengirimandetailid
+
+                    INNER JOIN 
+                    (SELECT project_name, project_id FROM t_project) AS t4
+                    ON t1.project_id = t4.project_id
+
+                    INNER JOIN 
+                    (SELECT NamaKaryawan, NIK FROM hrd2.jk_data_karyawan) AS t5
+                    ON t1.nik = t5.NIK
+
+                    WHERE $bagianWhere ORDER BY t1.pengiriman_id DESC $limit";
+        $data = getArray($sqlQuery);
+
+        return $data;
+    }
 
 }

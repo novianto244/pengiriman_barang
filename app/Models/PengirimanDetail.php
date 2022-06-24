@@ -13,7 +13,6 @@ class PengirimanDetail extends Model
         'pengiriman_detail_id',
         'pengiriman_id',
         'status_pengiriman',
-        'tanggal',
         'nama_penerima',
         'tanda_tangan_penerima',
         'tanda_tangan_pengirim',
@@ -24,17 +23,13 @@ class PengirimanDetail extends Model
         'note',
         'status_delete',
         'created_date',
-        'created_by',
-        'updated_date',
-        'updated_by',
-        'deleted_date',
-        'deleted_by'
+        'created_by'
     ];
 
     protected $table = "t_pengiriman_detail";
     protected $primaryKey = "pengiriman_detail_id";
     // protected $keyType = 'string';
 
-    public $incrementing = false;
+    public $incrementing = true;
     public $timestamps = false;
 }
