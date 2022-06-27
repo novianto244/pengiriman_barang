@@ -61,12 +61,12 @@ class LoadMoreController extends Controller
                             <tr>
                                 <td style="width:80px; font-weight:600; color:#666565;">Created Date</td>
                                 <td style="width:10px; text-align:center;">:</td>
-                                <td>'.$value['created_date'].'</td>
+                                <td style="color:#666666;">'.tgl_indo($value['created_date']).'</td>
                             </tr>
                             <tr>
                                 <td style="width:80px; font-weight:600; color:#666565;">Updated Date</td>
                                 <td style="width:10px; text-align:center;">:</td>
-                                <td>'.$value['created_detail'].'</td>
+                                <td style="color:#666666;">'.tgl_indo($value['created_detail']).'</td>
                             </tr>
                         </table>
                     </div>';

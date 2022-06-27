@@ -10,7 +10,10 @@ class GlobalController extends Controller
 {
     use Getdata;
     function load_data_total(Request $request){
-        $data_total = $this->getloaddata(null, '', 'TOTAL');
+        $parameter = [
+            'total' => 'TOTAL'
+        ];
+        $data_total = $this->getloaddata(null, null, $parameter);
         
         $pengiriman_baru = 0;
         $berangkat = 0;

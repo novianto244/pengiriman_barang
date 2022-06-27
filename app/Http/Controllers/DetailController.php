@@ -25,7 +25,7 @@ class DetailController extends Controller
 
     }
 
-    function load_timeline(Request $request){
+    public function load_timeline(Request $request){
         $output = '';
 
         $output .= '
@@ -144,4 +144,31 @@ class DetailController extends Controller
             'detail'=>$output,
         ]);   
     }
+
+    public function getdatadetail(Request $request){
+        $nama_surat_jalan = $request->nama_surat_jalan;
+        $parameter = [
+            'nama_surat_jalan' => $nama_surat_jalan
+        ];
+
+        $result = $this->getloaddata(null, null, $parameter);
+
+        return response()->json([
+            'nama_surat_jalan'=>$result[0]['nama_surat_jalan'],
+            'tanggal_surat_jalan' => $result[0]['tanggal_surat_jalan'],
+            'NamaKaryawan' => $result[0]['NamaKaryawan'],
+            'kendaraan_id' => $result[0]['kendaraan_id'],
+            'project_name' => $result[0]['project_name'],
+            'alamat_project' => $result[0]['alamat_project'],
+            'nama_penerima' => $result[0]['nama_penerima'],
+            'tanda_tangan_penerima' => $result[0]['tanda_tangan_penerima'],
+            'tanda_tangan_pengirim' => $result[0]['tanda_tangan_pengirim'],
+            'foto_barang_penerima' => $result[0]['foto_barang_penerima'],
+            'foto_barang2' => $result[0]['foto_barang2'],
+            'foto_surat_jalan' => $result[0]['foto_surat_jalan'],
+            'gps' => $result[0]['gps'],
+            'gps_time' => $result[0]['gps_time'],
+        ]);   
+    }
+
 }

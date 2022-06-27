@@ -31,5 +31,6 @@ Route::group(['middleware' => 'checklogin'], function () {
      // Detail 
      Route::get('detail-{parameter}', [DetailController::class, 'detail']);
      Route::post('load_timeline', [DetailController::class, 'load_timeline']);
+     Route::post('getdatadetail', [DetailController::class, 'getdatadetail']);
 
 });
