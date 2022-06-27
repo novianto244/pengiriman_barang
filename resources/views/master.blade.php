@@ -29,6 +29,9 @@
     <script src="assets/datatables/js/dataTables.rowGroup.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Timeline -->
+    <link rel="stylesheet" href="assets/bootstrap/css/timeline-1.css" />
+
     <!-- select2 -->
     <link href="assets/jquery/select2/select2.css" rel="stylesheet" />
     <script src="assets/jquery/select2/select2.min.js"></script>

@@ -58,4 +58,21 @@ trait Getdata
         return $data;
     }
 
+    public function gethistory($id, $nama_surat_jalan){
+        $bagianWhere = "";
+        if(!empty($id)){
+            $bagianWhere .= "t2.pengiriman_detail_id < '".$id."' AND t1.status_delete=0 AND t2.status_delete=0";
+        }else{
+            $bagianWhere .= "t1.status_delete=0 AND t2.status_delete=0";
+        }
+
+        $sqlQuery = "SELECT * FROM drc.t_pengiriman as t1
+                    RIGHT JOIN drc.t_pengiriman_detail as t2 
+                    USING (pengiriman_id)
+                    WHERE $bagianWhere AND t1.nama_surat_jalan = '".$nama_surat_jalan."' ORDER BY t2.pengiriman_detail_id DESC LIMIT 2";
+        $result = getArray($sqlQuery);
+
+        return $result;
+    }
+
 }

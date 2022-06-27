@@ -26,119 +26,44 @@ class DetailController extends Controller
     }
 
     public function load_timeline(Request $request){
+        $id = $request->id;
+        $nama_surat_jalan = $request->nama_surat_jalan;
+
+        if($id > 0){
+            $data = $this->gethistory($id, $nama_surat_jalan); //  Load More
+        }else{
+            $data = $this->gethistory(null, $nama_surat_jalan); // Start Data
+        }
+
         $output = '';
+        $last_id = '';
 
-        $output .= '
-                <div class="page-header">
-                    <h6>History of Surat Jalan</h6>
-                </div>
-
-                <div class="timeline">
-                    <div class="line text-muted"></div>
-                    <div class="separator text-muted">
-                        <time>26. 3. 2015</time>
-                    </div>
-
-                    <article class="panel panel-danger panel-outline">
-                        <div class="panel-heading icon">
-                            <i class="fa fa-exclamation-circle" style="margin-right:-15px;"></i>
-                        </div>
-
-                        <div class="panel-body">
-                            <strong>Someone</strong> favourited your photo.
-                        </div>
-                    </article>
-
-                    <article class="panel panel-default panel-outline">
-                        <div class="panel-heading icon">
-                            <i class="fa fa-save" style="margin-right:-15px;"></i>
-                        </div>
-
-                        <div class="panel-body">
-                            <img class="img-responsive img-rounded" src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1623287023-best-small-watches-40mm-cwc-g10-1623287014.jpg?crop=1xw:1xh;center,top&resize=480%3A%2A" />
-                        </div>
-                    </article>
-
-                    <article class="panel panel-primary">
-                        <div class="panel-heading icon">
-                            <i class="fa fa-plus" style="margin-right:-15px;"></i>
-                        </div>
-
-                        <div class="panel-heading">
-                            <h2 class="panel-title">New content added</h2>
-                        </div>
-
-                        <div class="panel-body">
-                            Some new content has been added.
-                        </div>
-
-                        <div class="panel-footer">
-                            <small>Footer is also supported!</small>
-                        </div>
-                    </article>
-
-                    <div class="separator text-muted">
-                        <time>25. 3. 2015</time>
-                    </div>
-
-                    <article class="panel panel-primary">
-                        <div class="panel-heading icon">
-                            <i class="fa fa-plus" style="margin-right:-15px;"></i>
-                        </div>
-
-                        <div class="panel-heading">
-                            <h2 class="panel-title">New content added</h2>
-                        </div>
-
-                        <div class="panel-body">
-                            Some new content has been added.
-                        </div>
-
-                        <div class="panel-footer">
-                            <small>Footer is also supported!</small>
-                        </div>
-                    </article>
-
-                    <div class="separator text-muted">
-                        <time>25. 3. 2015</time>
-                    </div>
-
-                    <article class="panel panel-primary">
-                        <div class="panel-heading icon">
-                            <i class="fa fa-plus" style="margin-right:-15px;"></i>
-                        </div>
-
-                        <div class="panel-heading">
-                            <h2 class="panel-title">New content added</h2>
-                        </div>
-
-                        <div class="panel-body">
-                            Some new content has been added.
-                        </div>
-
-                        <div class="panel-footer">
-                            <small>Footer is also supported!</small>
-                        </div>
-                    </article>
-
-                    <div class="separator text-muted">
-                        <time>25. 3. 2015</time>
-                    </div>
-
-
-                    <article class="panel panel-info panel-outline">
-                        <div class="panel-heading icon">
-                            <i class="glyphicon glyphicon-info-sign"></i>
-                        </div>
-
-                        <div class="panel-body">
-                            That is all.
-                        </div>
-                    </article>
-                </div>
-
-                </div>
-        ';
+        if(!empty($data)){
+            foreach($data as $key=>$value){
+                $output .= '
+                            <div class="timeline-5 right-5">
+                                <div class="card timeline-shadow">
+                                    <div class="card-body p-4">
+                                        <p style="display:inline; font-weight:600; color:gray;">'.$value['created_by'].'</p>
+                                        <p style="display:inline; color:gray;"> - </p>
+                                        <p style="display:inline-block; color:gray;">'.$value['note_title'].'</p>                                    
+                                        <p class="small text-muted"><i class="fa fa-clock" style="color:gray"></i>21 March, 2020</p>
+                                        <hr>
+                                        <p class="mt-2 mb-0" style="color:gray;">'.$value['note'].'</p>
+                                    </div>
+                                </div>
+                            </div>';
+                $last_id = $value['pengiriman_detail_id'];
+            }
+          
+            $output .= '<div id="load_more" class="loadmore" style="width:200px; margin: 0 auto;">
+                            <button type="button" name="load_more_button" class="btn btn-outline-success form-control" data-id="'.$last_id.'" id="load_more_button"><i class="fa fa-arrow-alt-circle-down" style="margin-right:-15px;"></i>Load More</button>
+                        </div>';
+        }else{
+            $output .= '<div id="load_more" class="loadmore" style="width:400px; margin: 0 auto;">
+                            <button type="button" name="load_more_button" class="btn btn-outline-info form-control"><i class="fa fa-exclamation-circle" style="margin-right:-15px;"></i>This is the beginning of the timeline</button>
+                        </div>';
+        }
 
         return response()->json([
             'detail'=>$output,

@@ -77,22 +77,22 @@ class LoadMoreController extends Controller
                 switch($tipe){
                     case 'pengiriman_baru':
                         $output .= '<div id="load_more" class="loadmore">
-                                        <button type="button" name="load_more_button_pengiriman_baru" class="btn btn-success form-control" data-id="'.$last_id.'" id="load_more_button_pengiriman_baru"><i class="fa fa-arrow-alt-circle-down" style="margin-right:-15px;"></i>Load More</button>
+                                        <button type="button" name="load_more_button_pengiriman_baru" class="btn btn-outline-success form-control" data-id="'.$last_id.'" id="load_more_button_pengiriman_baru"><i class="fa fa-arrow-alt-circle-down" style="margin-right:-15px;"></i>Load More</button>
                                     </div>';
                         break;
                     case 'berangkat':
                         $output .= '<div id="load_more" class="loadmore">
-                                        <button type="button" name="load_more_button_berangkat" class="btn btn-success form-control" data-id="'.$last_id.'" id="load_more_button_berangkat"><i class="fa fa-arrow-alt-circle-down" style="margin-right:-15px;"></i>Load More</button>
+                                        <button type="button" name="load_more_button_berangkat" class="btn btn-outline-success form-control" data-id="'.$last_id.'" id="load_more_button_berangkat"><i class="fa fa-arrow-alt-circle-down" style="margin-right:-15px;"></i>Load More</button>
                                     </div>';
                         break;
                     case 'terkirim':
                         $output .= '<div id="load_more" class="loadmore">
-                                        <button type="button" name="load_more_button_terkirim" class="btn btn-success form-control" data-id="'.$last_id.'" id="load_more_button_terkirim"><i class="fa fa-arrow-alt-circle-down" style="margin-right:-15px;"></i>Load More</button>
+                                        <button type="button" name="load_more_button_terkirim" class="btn btn-outline-success form-control" data-id="'.$last_id.'" id="load_more_button_terkirim"><i class="fa fa-arrow-alt-circle-down" style="margin-right:-15px;"></i>Load More</button>
                                     </div>';
                         break;
                     case 'batal':
                         $output .= '<div id="load_more" class="loadmore">
-                                        <button type="button" name="load_more_button_batal" class="btn btn-success form-control" data-id="'.$last_id.'" id="load_more_button_batal"><i class="fa fa-arrow-alt-circle-down" style="margin-right:-15px;"></i>Load More</button>
+                                        <button type="button" name="load_more_button_batal" class="btn btn-outline-success form-control" data-id="'.$last_id.'" id="load_more_button_batal"><i class="fa fa-arrow-alt-circle-down" style="margin-right:-15px;"></i>Load More</button>
                                     </div>';
                         break;
                 }
@@ -100,22 +100,22 @@ class LoadMoreController extends Controller
                 switch($tipe){
                     case 'pengiriman_baru':
                         $output .= '<div id="load_more" class="loadmore">
-                                        <button type="button" name="load_more_button_pengiriman_baru" class="btn btn-info form-control"><i class="fa fa-exclamation-circle" style="margin-right:-15px;"></i>No Data Found</button>
+                                        <button type="button" name="load_more_button_pengiriman_baru" class="btn btn-outline-info form-control"><i class="fa fa-exclamation-circle" style="margin-right:-15px;"></i>No Data Found</button>
                                     </div>';
                         break;
                     case 'berangkat':
                         $output .= '<div id="load_more" class="loadmore">
-                                        <button type="button" name="load_more_button_berangkat" class="btn btn-info form-control"><i class="fa fa-exclamation-circle" style="margin-right:-15px;"></i>No Data Found</button>
+                                        <button type="button" name="load_more_button_berangkat" class="btn btn-outline-info form-control"><i class="fa fa-exclamation-circle" style="margin-right:-15px;"></i>No Data Found</button>
                                     </div>';
                         break;
                     case 'terkirim':
                         $output .= '<div id="load_more" class="loadmore">
-                                        <button type="button" name="load_more_button_terkirim" class="btn btn-info form-control"><i class="fa fa-exclamation-circle" style="margin-right:-15px;"></i>No Data Found</button>
+                                        <button type="button" name="load_more_button_terkirim" class="btn btn-outline-info form-control"><i class="fa fa-exclamation-circle" style="margin-right:-15px;"></i>No Data Found</button>
                                     </div>';
                         break;
                     case 'batal':
                         $output .= '<div id="load_more" class="loadmore">
-                                        <button type="button" name="load_more_button_batal" class="btn btn-info form-control"><i class="fa fa-exclamation-circle" style="margin-right:-15px;"></i>No Data Found</button>
+                                        <button type="button" name="load_more_button_batal" class="btn btn-outline-info form-control"><i class="fa fa-exclamation-circle" style="margin-right:-15px;"></i>No Data Found</button>
                                     </div>';
                         break;
                 }

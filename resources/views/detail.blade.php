@@ -13,7 +13,7 @@
 </nav>  
 
 
-<div id="main-container" style="overflow-y: scroll; overflow-x:hidden; margin:5px; border:1px solid #d8d8d8;">
+<div id="main-container" style="overflow-y: scroll; overflow-x:hidden; margin:5px; border:1px solid #d8d8d8; background-color:white;">
     <div style="height: 80px; padding:5px; padding:8px; text-align:right">
         <div class="row">
             <div class="col">
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <div class="row" style="border:solid 1px #d8d8d8; padding:7px 23px 7px 21px; margin-bottom:15px; background-color:white;">
+    <div class="row" style="border:solid 1px #d8d8d8; padding:7px 23px 7px 21px; background-color:white;">
         <!-- Detail Surat Jalan -->
         <div class="col-sm-3" style="background-color: white; border:1px solid lightgray;">
             <div class="row border-bottom dark-background" style="padding-top:15px;">
@@ -89,11 +89,20 @@
                 <div class="col-sm-8"> <p class="capital-title-white"><i class="fa fa-clipboard margin-right-min15"></i>Timeline</p></div>
             </div>
 
-            <div class="container" id="history_sj"></div>
+            <div class="container">
+                <section class="gradient-custom-5">
+                    <div class="container py-5">
+                        <div class="main-timeline-5">
+                            <div id="history_sj"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
         </div>
     </div>
 
-    <div style="height: 35px; padding:5px; text-align:center; color:gray; font-size:13px;">
+    <div class="footer-sj">
         2022 © Jayakencana.com. All rights reserved.
     </div>
 
@@ -130,8 +139,8 @@
 
         var _token = $('input[name="_token"]').val();
 
-        load_timeline('', _token);
         getdetaildata();
+        load_timeline('', _token);
 
         // Get Detail History
         function load_timeline(id="", _token){
@@ -141,12 +150,12 @@
                 cache: false,
                 data:{
                     id:id, 
-                    nama_surat_jalan : $('#nama_surat_jalan').val(),
+                    nama_surat_jalan : $('#title_nama_surat_jalan').val(),
                     nik: $('#nik').val(),
                     _token:_token},
                 
                 success:function(data){
-                    // $('#load_more_button_pengiriman_baru').remove();
+                    $('#load_more_button').remove();
                     $('#history_sj').append(data.detail);
                 },
                 error: function (data) {
@@ -154,6 +163,13 @@
                 }
             })
         }
+
+        // History Load more button
+        $(document).on('click', '#load_more_button', function(){
+            var id = $(this).data('id');
+            $('#load_more_button').html('<b>Loading...</b>');
+            load_timeline(id, _token);
+        });
 
         // Get Detail Data
         function getdetaildata(){
@@ -167,6 +183,7 @@
                 },
                 success:function(data){
                     console.log(data);
+
                     $('#nama_surat_jalan').val(data.nama_surat_jalan);
                     $('#tanggal_surat_jalan').val(data.tanggal_surat_jalan).datepicker("update");
                     $('#driver').val(data.NamaKaryawan);
@@ -174,7 +191,7 @@
                     $('#nama_project').val(data.project_name);
                     $('#alamat_pengiriman').val(data.alamat_project);
                     $('#nama_penerima').val(data.nama_penerima);
-                    $('#gps').val(data.gps + "\n\n" + data.gps_time);
+                    data.gps != null? $('#gps').val(data.gps + "\n\n" + data.gps_time) : $('#gps').val('');
 
                     if(data.tanda_tangan_penerima != null){
                         $('#div_ttd_penerima').append(

@@ -4,7 +4,7 @@
 
 <input type="text" id="nik" value="{{ $data['nik'] }}" class="form-control-sm" hidden readonly>   
 
-<div id="main-container" style="overflow-y: scroll; overflow-x:hidden; margin:5px; border:1px solid #d8d8d8;">
+<div id="main-container" style="overflow-y: scroll; overflow-x:hidden; margin:5px; border:1px solid #d8d8d8; background-color:white;">
     <div style="height: 80px; padding:5px; padding:8px; text-align:right">
         <table class="table table-sm table-borderless">
             <tr>
@@ -28,7 +28,7 @@
         </table>
     </div>
 
-    <div class="row" style="border:solid 1px #d8d8d8; padding:7px 23px 7px 21px; margin-bottom:25px; background-color:white;">
+    <div class="row" style="border:solid 1px #d8d8d8; padding:7px 23px 7px 21px; background-color:white;">
         <div class="col-md-3 bordered-box" ondrop="drop(event)" ondragover="allowDrop(event)">  
             <img src="public/img/stage1.png" alt="stage1" class="responsive">
             <div class="row border-bottom dark-background" style="padding-top:15px;">
@@ -82,7 +82,7 @@
         </div>
     </div>
 
-    <div style="height: 35px; padding:5px; text-align:center; color:gray; font-size:13px;">
+    <div class="footer-sj">
         2022 © Jayakencana.com. All rights reserved.
     </div>
 
