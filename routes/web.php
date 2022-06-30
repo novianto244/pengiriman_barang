@@ -6,6 +6,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\LoadMoreController;
 use App\Http\Controllers\DetailController;
+use App\Http\Controllers\CrudController;
 
 Route::get('/', [AuthController::class, 'showFormLogin'])->name('login');
 Route::get('login', [AuthController::class, 'showFormLogin'])->name('login');
@@ -33,4 +34,7 @@ Route::group(['middleware' => 'checklogin'], function () {
      Route::post('load_timeline', [DetailController::class, 'load_timeline']);
      Route::post('getdatadetail', [DetailController::class, 'getdatadetail']);
 
+     // CRUD
+     Route::post('crud_delete', [CrudController::class, 'crud_delete']);
+     Route::post('crud_update', [CrudController::class, 'crud_update']);
 });

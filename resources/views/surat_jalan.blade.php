@@ -46,7 +46,7 @@
         <div class="col-md-3 bordered-box" ondrop="drop(event)" ondragover="allowDrop(event)">  
             <img src="public/img/stage2.png" alt="stage2" class="responsive">
             <div class="row border-bottom dark-background" style="padding-top:15px;">
-                <div class="col-sm-8"> <p class="capital-title-white"><i class="fa fa-car-side margin-right-min15"></i>BERANGKAT</p></div>
+                <div class="col-sm-8"> <p class="capital-title-white"><i class="fa fa-shipping-fast margin-right-min15"></i>BERANGKAT</p></div>
                 <div class="col-sm-4 text-right"><p id="total_berangkat" class="badge-total"></p></div>
             </div>
           

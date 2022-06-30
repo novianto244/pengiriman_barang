@@ -40,16 +40,36 @@ class DetailController extends Controller
 
         if(!empty($data)){
             foreach($data as $key=>$value){
+                $simbol = '';
+                switch($value['note_title']){
+                    case 'added a deal';
+                        $simbol .= '<i class="fa fa-landmark" style="color:white;"></i>';
+                        break;
+                    case 'changed a deal';
+                        $simbol .= '<i class="fa fa-fan" style="color:white;"></i>';
+                        break;
+                    case 'added an additional field':
+                        $simbol .= '<i class="fa fa-plus" style="color:white;"></i>';
+                        break;
+                    case 'changed an additional field':
+                        $simbol .= '<i class="fa fa-file-alt" style="color:white;"></i>';
+                        break;
+                    default :
+                        $simbol .= "";
+                        break;
+                }
+
                 $output .= '
                             <div class="timeline-5 right-5">
+                                <div class="simbol-timeline">'.$simbol.'</div>
                                 <div class="card timeline-shadow">
                                     <div class="card-body p-4">
-                                        <p style="display:inline; font-weight:600; color:gray;">'.$value['created_by'].'</p>
+                                        <p style="display:inline; font-weight:600; color:#5a5f64;">'.$value['created_by'].'</p>
                                         <p style="display:inline; color:gray;"> - </p>
-                                        <p style="display:inline-block; color:gray;">'.$value['note_title'].'</p>                                    
-                                        <p class="small text-muted"><i class="fa fa-clock" style="color:gray"></i>21 March, 2020</p>
+                                        <p style="display:inline-block; color:#5a5f64;">'.$value['note_title'].'</p>                                    
+                                        <p class="small text-muted"><i class="fa fa-clock" style="color:gray"></i>'.tgl_indo($value['createddate']).'</p>
                                         <hr>
-                                        <p class="mt-2 mb-0" style="color:gray;">'.$value['note'].'</p>
+                                        <p class="mt-2 mb-0" style="color:#5a5f64;">'.$value['note'].'</p>
                                     </div>
                                 </div>
                             </div>';
@@ -93,6 +113,7 @@ class DetailController extends Controller
             'foto_surat_jalan' => $result[0]['foto_surat_jalan'],
             'gps' => $result[0]['gps'],
             'gps_time' => $result[0]['gps_time'],
+            'status_pengiriman' => $result[0]['status_pengiriman']
         ]);   
     }
 

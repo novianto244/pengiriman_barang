@@ -21,6 +21,7 @@ class PengirimanDetail extends Model
         'foto_surat_jalan',
         'gps',
         'gps_time',
+        'note_title',
         'note',
         'status_delete',
         'created_date',

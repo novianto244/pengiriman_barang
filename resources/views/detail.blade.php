@@ -14,20 +14,32 @@
 
 
 <div id="main-container" style="overflow-y: scroll; overflow-x:hidden; margin:5px; border:1px solid #d8d8d8; background-color:white;">
-    <div style="height: 80px; padding:5px; padding:8px; text-align:right">
-        <div class="row">
-            <div class="col">
-                    <p id="title_pengiriman_baru">Pengiriman Baru</p>
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            </div>
-            <div class="col" style="text-align: center;">
-                <div class="form-check">
-                    <p id="title_pengiriman_baru">Pengiriman Baru</p>
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                </div>
-            </div>
-            <div class="col">col</div>
-            <div class="col">col</div>
+    <div class="row" style="height: 80px; padding-top:7px; color:gray-dark; overflow-y: scroll; overflow-x:hidden; text-align: center; display:flex; flex-wrap: wrap;">
+        <div style="flex : 1 1 250px; border-bottom:1px solid #d8d8d8;">
+            <P class="title-status" id="title_pengiriman_baru">Pengiriman Baru</P>
+            <span class="checkbox-custom2"><input type="checkbox" value="PENGIRIMAN BARU" id="check_pengiriman_baru"></span>
+            <div class="line-1" id="line-1"></div>
+            <P class="hint" id="hint_pengiriman_baru"></P>
+        </div>
+        <div style="flex : 1 1 250px; border-bottom:1px solid #d8d8d8;">
+            <P class="title-status" id="title_berangkat" style="margin-bottom:-2px;">Berangkat</P>
+            <span class="checkbox-custom2"><input type="checkbox" value="BERANGKAT" id="check_berangkat"></span>
+            <div class="line-2" id="line-2"></div>
+            <div class="line-3" id="line-3"></div>
+            <P class="hint" id="hint_berangkat"></P>
+        </div>
+        <div style="flex : 1 1 250px; border-bottom:1px solid #d8d8d8;">
+            <P class="title-status" id="title_terkirim" style="margin-bottom:-2px;">Terkirim</P>
+            <span class="checkbox-custom2"><input type="checkbox" value="TERKIRIM" id="check_terkirim"></span>
+            <div class="line-2" id="line-4"></div>
+            <div class="line-3" id="line-5"></div>
+            <P class="hint" id="hint_terkirim"></P>
+        </div>
+        <div style="flex : 1 1 250px; border-bottom:1px solid #d8d8d8;">
+            <P class="title-status" id="title_batal" style="margin-bottom:-2px;">Batal</P>
+            <span class="checkbox-custom2"><input type="checkbox" value="BATAL" id="check_batal"></span>
+            <div class="line-2" id="line-6"></div>
+            <P class="hint" id="hint_batal"></P>
         </div>
     </div>
 
@@ -77,7 +89,7 @@
                         <div id="div_surat_jalan"></div>
 
                         <label class="inp-title">GPS</label>
-                        <textarea class="form-control rounded-0" id="gps" name="gps" rows="6"></textarea>
+                        <textarea class="form-control inp rounded-0" id="gps" name="gps" rows="6"></textarea>
                     </div>
                 </div>
             </div>
@@ -87,6 +99,12 @@
         <div class="col-sm-9" style="background-color: white; border:1px solid lightgray;">
             <div class="row border-bottom dark-background" style="padding-top:15px;">
                 <div class="col-sm-8"> <p class="capital-title-white"><i class="fa fa-clipboard margin-right-min15"></i>Timeline</p></div>
+            </div>
+
+            <div class="container" style="padding:5px 5px 15px 5px; border-bottom:1px dashed gray;">
+                <button id="update_btn" type="button" class="btn btn-primary btn-sm"><i class="fa fa-save" style="margin-right:-15px;"></i>Update Surat Jalan</button>
+                <button id="batal_btn" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-window-close" style="margin-right:-15px;"></i>Batal</button>
+                <button id="hapus_btn" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash" style="margin-right:-15px;"></i>Hapus</button>
             </div>
 
             <div class="container">
@@ -124,6 +142,35 @@
             todayHighlight: true,
             language: "id",
             weekStart: 0,
+        });
+
+        // Hover Hint
+        $("#check_pengiriman_baru").hover(function() {
+            $('#check_pengiriman_baru').css('cursor', 'pointer'); 
+            $('#hint_pengiriman_baru').text("Pindah ke : Pengiriman Baru").fadeIn();
+        }, function() {
+            $('#hint_pengiriman_baru').text("").fadeOut();
+        });
+
+        $("#check_berangkat").hover(function() {
+            $('#check_berangkat').css('cursor', 'pointer'); 
+            $('#hint_berangkat').text("Pindah ke : Berangkat").fadeIn();
+        }, function() {
+            $('#hint_berangkat').text("").fadeOut();
+        });
+
+        $("#check_terkirim").hover(function() {
+            $('#check_terkirim').css('cursor', 'pointer'); 
+            $('#hint_terkirim').text("Pindah ke : Terkirim").fadeIn();
+        }, function() {
+            $('#hint_terkirim').text("").fadeOut();
+        });
+
+        $("#check_batal").hover(function() {
+            $('#check_batal').css('cursor', 'pointer'); 
+            $('#hint_batal').text("Pindah ke : Batal").fadeIn();
+        }, function() {
+            $('#hint_batal').text("").fadeOut();
         });
 
         // Set Container Height
@@ -186,8 +233,8 @@
 
                     $('#nama_surat_jalan').val(data.nama_surat_jalan);
                     $('#tanggal_surat_jalan').val(data.tanggal_surat_jalan).datepicker("update");
-                    $('#driver').val(data.NamaKaryawan);
-                    $('#nomor_kendaraan').val(data.kendaraan_id);
+                    $('#driver').val(data.NamaKaryawan.toUpperCase());
+                    $('#nomor_kendaraan').val(data.kendaraan_id.toUpperCase());
                     $('#nama_project').val(data.project_name);
                     $('#alamat_pengiriman').val(data.alamat_project);
                     $('#nama_penerima').val(data.nama_penerima);
@@ -248,14 +295,154 @@
                         );
                     }
 
-                   
-
+                    switch(data.status_pengiriman){
+                        case 'PENGIRIMAN BARU':
+                            $('#check_pengiriman_baru').prop('checked', true);
+                            $("#title_berangkat").css("color", "white");
+                            $("#title_terkirim").css("color", "white");
+                            $("#title_batal").css("color", "white");
+                            $("#line-1").css("background-color","#B2E6F5");
+                            break;
+                        case 'BERANGKAT':
+                            $('#check_pengiriman_baru').prop('checked', true);
+                            $('#check_berangkat').prop('checked', true);
+                            $("#title_terkirim").css("color", "white");
+                            $("#title_batal").css("color", "white");
+                            $("#line-1").css("background-color","#B2E6F5");
+                            $("#line-2").css("background-color","#8DD6F7");
+                            break;
+                        case 'TERKIRIM':
+                            $('#check_pengiriman_baru').prop('checked', true);
+                            $('#check_berangkat').prop('checked', true);
+                            $('#check_terkirim').prop('checked', true);
+                            $("#title_batal").css("color", "white");
+                            $("#line-1").css("background-color","#B2E6F5");
+                            $("#line-2").css("background-color","#8DD6F7");
+                            $("#line-3").css("background-color","#8DD6F7");
+                            $("#line-4").css("background-color","#5BC0DE");
+                            break;
+                        case 'BATAL':
+                            $('#check_batal').prop('checked', true);
+                            $("#line-1").css("background-color","#B7CEE9");
+                            $("#line-2").css("background-color","#B7CEE9");
+                            $("#line-3").css("background-color","#B7CEE9");
+                            $("#line-4").css("background-color","#B7CEE9");
+                            $("#line-5").css("background-color","#B7CEE9");
+                            $("#line-6").css("background-color","#B7CEE9");
+                            break;
+                    }
                 },
                 error: function (data) {
                     console.log('Error:', data);
                 }
             })
         }
+
+        // Update Data
+        $('#update_btn').click(function(){
+            alert("update");
+        });
+        
+        // Batal
+        $('#batal_btn').click(function(){
+            var surat_jalan = $('#title_nama_surat_jalan').val();
+            var str="Nama Surat Jalan  :  " + surat_jalan;
+            Swal.fire({
+                title: 'Anda yakin ingin membatalkan data ini ?',
+                html: '<center>' + str + '</center>',
+                customClass: {
+                    popup: 'format-pre'
+                },
+                icon: 'warning',
+                showCancelButton: true
+            }).then((result)=>{
+                if(result.value){
+                    $.ajax({
+                        data: {
+                            tipe : 'surat_jalan',
+                            task : 'batal',
+                            surat_jalan : surat_jalan
+                        },
+                        type: "POST",
+                        dataType: 'json',
+                        url: "{{ url('crud_update') }}",
+                        cache: false,
+                        success: function (data) {
+                            console.log('Success:', data);
+                            Swal.fire({
+                                title: 'Success !',
+                                text: 'Data berhasil diupdate.',
+                                icon: 'info',
+                                showConfirmButton:false,
+                            })
+                            setTimeout(function(){
+                                location.reload();
+                            },1000);
+
+                            $('#check_pengiriman_baru').prop('checked', false);
+                            $('#check_berangkat').prop('checked', false);
+                            $('#check_terkirim').prop('checked', false);
+                            $('#check_batal').prop('checked', true);
+                            $("#line-1").css("background-color","#B7CEE9");
+                            $("#line-2").css("background-color","#B7CEE9");
+                            $("#line-3").css("background-color","#B7CEE9");
+                            $("#line-4").css("background-color","#B7CEE9");
+                            $("#line-5").css("background-color","#B7CEE9");
+                            $("#line-6").css("background-color","#B7CEE9");
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }
+            })
+        });
+        // Hapus Data
+        $('#hapus_btn').click(function(){
+            var surat_jalan = $('#title_nama_surat_jalan').val();
+            var str="Nama Surat Jalan  :  " + surat_jalan;
+            Swal.fire({
+                title: 'Anda yakin ingin menghapus data ini ?',
+                html: '<center>' + str + '</center>',
+                customClass: {
+                    popup: 'format-pre'
+                },
+                icon: 'warning',
+                showCancelButton: true
+            }).then((result)=>{
+                if(result.value){
+                    $.ajax({
+                        data: {
+                            tipe : 'surat_jalan',
+                            surat_jalan : surat_jalan
+                        },
+                        type: "POST",
+                        dataType: 'json',
+                        url: "{{ url('crud_delete') }}",
+                        cache: false,
+                        success: function (data) {
+                            console.log('Success:', data);
+                            Swal.fire({
+                                title: 'Deleted !',
+                                text: 'Data berhasil dihapus.',
+                                icon: 'success',
+                                showConfirmButton:false,
+                            })
+                            setTimeout(function(){
+                                window.location.href='surat_jalan' + '-' + 
+                                [
+                                    'surat_jalan',
+                                    $('#nik').val(),
+                                ];
+                            },1000);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }
+            })
+        });
 
        
     });     

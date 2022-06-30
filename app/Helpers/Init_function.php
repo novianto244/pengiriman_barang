@@ -51,6 +51,29 @@
         return $tanggal.' '.$bulan_indonesia[(int)$bulan].' '.$tahun.', '.$jam.':'.$menit;
     }
 
+    function getid($models, $column_id)
+    {
+        $concat = "\\"."App"."\\"."Models"."\\".$models;
+        $exist_data = $concat::count();
+        
+        if($exist_data <= 0){
+            $id = '1';
+            return $id;
+        }else{
+            $column = $column_id."_id";
+            $last = $concat::orderBy('created_date')->pluck($column)->last();
+            $id = $last + 1;
+            return $id;
+        }
+    }
+
+    function getidby($id, $table, $where, $parameter){
+        $sqlQuery = "SELECT $id FROM $table WHERE $where ='".$parameter."' AND status_delete=0";
+        $result = getOne($sqlQuery);
+
+        return $result;
+    }
+
     function create_log($tipe, $query_type, $sql, $user){
 		/* ::::::: Get IP Address ::::::: */
 		if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  

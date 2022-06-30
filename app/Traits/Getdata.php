@@ -27,7 +27,7 @@ trait Getdata
         if(isset($parameter['total']) == 'TOTAL'){
             $limit = '';
         }else{
-            $limit = 'LIMIT 2';
+            $limit = 'LIMIT 5';
         }
 
         $sqlQuery = "SELECT * FROM drc.t_pengiriman AS t1
@@ -40,7 +40,7 @@ trait Getdata
                     ON t1.pengiriman_id = t2.pengirimanid
                     
                     LEFT JOIN
-                    (SELECT pengiriman_detail_id as pengirimandetailid, status_pengiriman, nama_penerima, tanda_tangan_penerima, tanda_tangan_pengirim, foto_barang_penerima, foto_barang2, foto_surat_jalan, gps, gps_time, note, created_date as created_detail
+                    (SELECT pengiriman_detail_id as pengirimandetailid, status_pengiriman, nama_penerima, tanda_tangan_penerima, tanda_tangan_pengirim, foto_barang_penerima, foto_barang2, foto_surat_jalan, gps, gps_time, note_title, note, created_date as created_detail
                     FROM t_pengiriman_detail) AS t3
                     ON t2.pengiriman_detail_id = t3.pengirimandetailid
 
@@ -66,10 +66,10 @@ trait Getdata
             $bagianWhere .= "t1.status_delete=0 AND t2.status_delete=0";
         }
 
-        $sqlQuery = "SELECT * FROM drc.t_pengiriman as t1
+        $sqlQuery = "SELECT t1.*, t2.pengiriman_detail_id, t2.created_date as createddate, t2.status_pengiriman, t2.note_title, t2.note, t2.status_delete FROM drc.t_pengiriman as t1
                     RIGHT JOIN drc.t_pengiriman_detail as t2 
                     USING (pengiriman_id)
-                    WHERE $bagianWhere AND t1.nama_surat_jalan = '".$nama_surat_jalan."' ORDER BY t2.pengiriman_detail_id DESC LIMIT 2";
+                    WHERE $bagianWhere AND t1.nama_surat_jalan = '".$nama_surat_jalan."' ORDER BY t2.pengiriman_detail_id DESC LIMIT 5";
         $result = getArray($sqlQuery);
 
         return $result;
