@@ -45,6 +45,18 @@
         $tahun = substr($data,2,2);
         $bulan = substr($data, 5,2);
         $tanggal = substr($data, 8,2);
+           
+        return $tanggal.' '.$bulan_indonesia[(int)$bulan].' '.$tahun;
+    }
+
+    function tgl_indo_detail($data){
+        $bulan_indonesia = [
+                                1 =>   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Agust', 'Sept', 'Oct', 'Nov', 'Dec'
+                            ];
+
+        $tahun = substr($data,2,2);
+        $bulan = substr($data, 5,2);
+        $tanggal = substr($data, 8,2);
         $jam = substr($data, 11,2);
         $menit = substr($data,14,2);
            

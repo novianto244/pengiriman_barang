@@ -16,8 +16,8 @@
             <tr>
                 <td><input id="search_no_form" type="text" class="form-control form-control-sm" placeholder="Search by Nama Surat Jalan" autocomplete="off"></td>
                 <td><input id="search_project" type="text" class="form-control form-control-sm" placeholder="Search by Project" autocomplete="off"></td>
-                <td><input id="search_driver" type="text" class="form-control form-control-sm" placeholder="Search by Driver" autocomplete="off"></td>
                 <td><input id="search_tanggal" autocomplete="off" class="form-control form-control-sm datepicker" placeholder="yyyy-mm-dd"></td>
+                <td style="text-align:center;"><select id="search_driver" name="search_driver" class="form-select" style="width:250px; font-size:12px;" autocomplete="off"/></td>
                 <td> 
                     <div class="d-grid gap-2">
                         <button class="btn btn-primary" id="search_btn" type="button"><i class="fa fa-search margin-right-min15"></i>Search</button>
@@ -29,21 +29,19 @@
     </div>
 
     <div class="row" style="border:solid 1px #d8d8d8; padding:7px 23px 7px 21px; background-color:white;">
-        <div class="col-md-3 bordered-box" ondrop="drop(event)" ondragover="allowDrop(event)">  
+        <div id="div_pengiriman_baru" class="col-md-3 bordered-box" ondrop="drop(event)" ondragover="allowDrop(event)">  
             <img src="public/img/stage1.png" alt="stage1" class="responsive">
             <div class="row border-bottom dark-background" style="padding-top:15px;">
                 <div class="col-sm-8"> <p class="capital-title-white"><i class="fa fa-clipboard margin-right-min15"></i>PENGIRIMAN BARU</p></div>
                 <div class="col-sm-4 text-right"><p id="total_pengiriman_baru" class="badge-total"></p></div>
             </div>
          
-            <div class="panel-body">
+            <div class="panel-body" >
                 {{ csrf_field() }}
-                <div id="post_data_baru"></div>
+                <div id="post_data_baru" class="noDrop"></div>
             </div>
-
-
         </div>
-        <div class="col-md-3 bordered-box" ondrop="drop(event)" ondragover="allowDrop(event)">  
+        <div id="div_berangkat" class="col-md-3 bordered-box" ondrop="drop(event)" ondragover="allowDrop(event)">  
             <img src="public/img/stage2.png" alt="stage2" class="responsive">
             <div class="row border-bottom dark-background" style="padding-top:15px;">
                 <div class="col-sm-8"> <p class="capital-title-white"><i class="fa fa-shipping-fast margin-right-min15"></i>BERANGKAT</p></div>
@@ -52,10 +50,10 @@
           
             <div class="panel-body">
                 {{ csrf_field() }}
-                <div id="post_data_berangkat"></div>
+                <div id="post_data_berangkat" class="noDrop"></div>
             </div>
         </div>
-        <div class="col-md-3 bordered-box" ondrop="drop(event)" ondragover="allowDrop(event)">  
+        <div id="div_terkirim" class="col-md-3 bordered-box" ondrop="drop(event)" ondragover="allowDrop(event)">  
             <img src="public/img/stage3.png" alt="stage3" class="responsive">
             <div class="row border-bottom dark-background" style="padding-top:15px;">
                 <div class="col-sm-8"> <p class="capital-title-white"><i class="fa fa-clipboard-check margin-right-min15"></i>TERKIRIM</p></div>
@@ -65,10 +63,10 @@
 
             <div class="panel-body">
                 {{ csrf_field() }}
-                <div id="post_data_terkirim"></div>
+                <div id="post_data_terkirim" class="noDrop"></div>
             </div>
         </div>
-        <div class="col-md-3 bordered-box" ondrop="drop(event)" ondragover="allowDrop(event)">  
+        <div id="div_batal" class="col-md-3 bordered-box" ondrop="drop(event)" ondragover="allowDrop(event)">  
             <img src="public/img/stage4.png" alt="stage4" class="responsive">
             <div class="row border-bottom dark-background" style="padding-top:15px;">
                 <div class="col-sm-8">  <p class="capital-title-white"><i class="fa fa-times-circle margin-right-min15"></i>BATAL</p></div>
@@ -77,7 +75,7 @@
 
             <div class="panel-body">
                 {{ csrf_field() }}
-                <div id="post_data_batal"></div>
+                <div id="post_data_batal" class="noDrop"></div>
             </div>
         </div>
     </div>
@@ -85,7 +83,6 @@
     <div class="footer-sj">
         2022 © Jayakencana.com. All rights reserved.
     </div>
-
 </div>
 
 
@@ -95,14 +92,59 @@
         event.dataTransfer.setData("Text", event.target.id);
     }
 
+    function dragging(event) {
+        // document.getElementById("demo").innerHTML = "The p element is being dragged";
+    }
+
     function allowDrop(event) {
         event.preventDefault();
     }
 
-    function drop(event) {
+    function drop(event, target) {
         event.preventDefault();
+
+        // var target = event.target.id;
+        // var _target = $("#" + event.target.id);
+
+        // if ($(target).hasClass("noDrop")) {
+        //     alert('ga bisa drop');
+        // }else{
+        //     alert('bisa drop');
+        // }
+
+        // belom selesai
+
         var data = event.dataTransfer.getData("Text");
+        var target = event.target.id;
+
         event.target.appendChild(document.getElementById(data));
+
+        if(target=="div_pengiriman_baru" || target=="div_berangkat" || target=="div_terkirim" || target=="div_batal" ){
+            move_status(data, target);
+        }else{
+            alert("salah bung !");
+            $('#search_btn').trigger("click");
+        }
+    }
+
+    function move_status(nama_surat_jalan, target){
+        $.ajax({
+            url:"{{ url('move_status_sj') }}",
+            method:"POST",
+            cache: false,
+            data:{
+                nik: $('#nik').val(),
+                nama_surat_jalan : nama_surat_jalan,
+                target : target    
+            },
+            success:function(data){
+                $('#search_btn').trigger("click");
+                console.log('Success:', data);
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        })
     }
 
     $(function () {     
@@ -132,6 +174,32 @@
             weekStart: 0,
         });
 
+        $('#search_driver').select2({
+			// allowClear: true
+		});
+
+        // Get data Driver 
+		$.ajax({
+            type: 'POST',
+            url: "{{ url('getdriver') }}",
+            dataType: 'json',
+            cache: false, 
+            success: function(response){
+                var len = 0;
+                if(response != null){len = response.length;}
+                if(len > 0){
+                    for(var i=0; i<len; i++){
+                        var NIK = response[i].NIK;
+                        var NamaKaryawan = response[i].NamaKaryawan;
+                        
+                        // Search By Driver
+                        var option = "<option value='"+NIK+"'>"+ NIK + " - " + NamaKaryawan + "</option>"; 
+                        $("#search_driver").append(option); 
+                    }
+                }
+            }
+        });
+
 
         /* ::::::::::::: GET DATA SURAT JALAN :::::::::::::::::::: */
 
@@ -150,9 +218,15 @@
                 method:"POST",
                 cache: false,
                 data:{
-                    tipe: 'pengiriman_baru',
                     id:id, 
                     nik: $('#nik').val(),
+                    parameter : [
+                        'PENGIRIMAN BARU',
+                        $('#search_no_form').val(),
+                        $('#search_project').val(),
+                        $('#search_driver').val(),
+                        $('#search_tanggal').val()
+                    ],
                     _token:_token},
                 
                 success:function(data){
@@ -178,9 +252,15 @@
                 method:"POST",
                 cache: false,
                 data:{
-                    tipe: 'berangkat',
                     id:id, 
                     nik: $('#nik').val(),
+                    parameter : [
+                        'BERANGKAT',
+                        $('#search_no_form').val(),
+                        $('#search_project').val(),
+                        $('#search_driver').val(),
+                        $('#search_tanggal').val()
+                    ],
                     _token:_token},
                 
                 success:function(data){
@@ -206,9 +286,15 @@
                 method:"POST",
                 cache: false,
                 data:{
-                    tipe: 'terkirim',
                     id:id, 
                     nik: $('#nik').val(),
+                    parameter : [
+                        'TERKIRIM',
+                        $('#search_no_form').val(),
+                        $('#search_project').val(),
+                        $('#search_driver').val(),
+                        $('#search_tanggal').val()
+                    ],
                     _token:_token},
                 
                 success:function(data){
@@ -234,9 +320,15 @@
                 method:"POST",
                 cache: false,
                 data:{
-                    tipe: 'batal',
                     id:id, 
                     nik: $('#nik').val(),
+                    parameter : [
+                        'BATAL',
+                        $('#search_no_form').val(),
+                        $('#search_project').val(),
+                        $('#search_driver').val(),
+                        $('#search_tanggal').val()
+                    ],
                     _token:_token},
                 
                 success:function(data){
@@ -260,6 +352,14 @@
             $.ajax({
                 url:"{{ url('load_data_total') }}",
                 method:"POST",
+                data:{
+                    parameter : [
+                        $('#search_no_form').val(),
+                        $('#search_project').val(),
+                        $('#search_driver').val(),
+                        $('#search_tanggal').val()
+                    ],
+                    _token:_token},
                 cache: false,
                 
                 success:function(data){                   
@@ -274,43 +374,57 @@
             })
         }
 
-
-     
-       
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // Clear All Data
+        function clear_all_data(){
+            $('#post_data_baru').empty();
+            $('#post_data_berangkat').empty();
+            $('#post_data_terkirim').empty();
+            $('#post_data_batal').empty();
+        }
 
         // Search 
         $('#search_btn').click(function(){
-          alert("belom selesai");
+            clear_all_data();
+            load_data_total();
+            load_data_pengiriman_baru('', _token);
+            load_data_berangkat('', _token);
+            load_data_terkirim('', _token);
+            load_data_batal('', _token);
+            load_data_total();
         });
 
         // Reset
-            $('#reset_btn').click(function(){
+        $('#reset_btn').click(function(){
             location.reload();
         });
+
+        function trigger_save_by_enter(){
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if(keycode == '13'){
+               $('#search_btn').trigger("click");
+               load_data_total();
+            }
+        }
         
+        // Trigger search by Enter Button
+        $("#search_no_form").keypress(function(event){
+            trigger_save_by_enter();
+        });
 
+        $("#search_project").keypress(function(event){
+            trigger_save_by_enter();
+        });
 
+        $('#search_driver').change(function(){
+            $('#search_btn').trigger("click");
+            load_data_total();
+        });
+
+        $('#search_tanggal').datepicker()
+            .on("input change", function (e) {
+                $('#search_btn').trigger("click");
+                load_data_total();
+        });
 
     });     
 </script>

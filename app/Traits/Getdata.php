@@ -7,8 +7,8 @@ use PhpOffice\PhpSpreadsheet\Calculation\Financial\CashFlow\Single;
 
 trait Getdata
 {   
-    public function getloaddata($id, $tipe, $parameter){
-
+    public function getloaddata($id, $parameter)
+    {
         $bagianWhere = "";
         if(!empty($id)){
             $bagianWhere .= "t1.pengiriman_id < '".$id."' AND t1.status_delete=0";
@@ -16,12 +16,24 @@ trait Getdata
             $bagianWhere .= "t1.status_delete=0";
         }
 
-        if(!empty($tipe)){
-            $bagianWhere .= " AND t3.status_pengiriman='".$tipe."'";
+        if(!empty($parameter['status_pengiriman'])){
+            $bagianWhere .= " AND t3.status_pengiriman='".$parameter['status_pengiriman']."'";
         }
 
-        if(isset($parameter['nama_surat_jalan'])){
-            $bagianWhere .= " AND t1.nama_surat_jalan = '".$parameter['nama_surat_jalan']."'";
+        if(!empty($parameter['nama_surat_jalan'])){
+            $bagianWhere .= " AND t1.nama_surat_jalan LIKE '%".$parameter['nama_surat_jalan']."%'";
+        }
+
+        if(!empty($parameter['project_id'])){
+            $bagianWhere .= " AND t1.project_id LIKE '%".$parameter['project_id']."%'";
+        }
+
+        if(!empty($parameter['nik'])){
+            $bagianWhere .= " AND t1.nik = '".$parameter['nik']."'";
+        }
+
+        if(!empty($parameter['tanggal_surat_jalan'])){
+            $bagianWhere .= " AND t1.tanggal_surat_jalan = '".$parameter['tanggal_surat_jalan']."'";
         }
 
         if(isset($parameter['total']) == 'TOTAL'){

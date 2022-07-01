@@ -28,6 +28,8 @@ Route::group(['middleware' => 'checklogin'], function () {
 
      // Global 
      Route::post('load_data_total', [GlobalController::class, 'load_data_total']);
+     Route::post('getdriver', [GlobalController::class, 'getdriver']);
+     Route::post('move_status_sj', [GlobalController::class, 'move_status_sj']);
 
      // Detail 
      Route::get('detail-{parameter}', [DetailController::class, 'detail']);
