@@ -60,15 +60,37 @@ class GlobalController extends Controller
     }
 
     function move_status_sj(Request $request){
+        $table_id = 'pengiriman_detail_id';
+        $model = "\\"."App"."\\"."Models"."\\"."PengirimanDetail";
+        $id = getid('PengirimanDetail', 'pengiriman_detail');
+        $time_now = now();
+        $user = getusersession($request);
+
         $parameter = [
             'nama_surat_jalan' => $request->nama_surat_jalan,
             'target' => $request->target
-        ];dd($parameter);
-        $last_arr = $this->getloaddata(null, null, $parameter);
+        ];
+        $last_arr = $this->getloaddata(null, $parameter);
+        
+        switch($parameter['target']){
+            case 'div_pengiriman_baru':
+                $status = 'PENGIRIMAN BARU';
+                break;
+            case 'div_berangkat':
+                $status = 'BERANGKAT';
+                break;
+            case 'div_terkirim':
+                $status = 'TERKIRIM';
+                break;
+            case 'div_batal':
+                $status = 'BATAL';
+                break;
+        }
 
         $arr = [
+            'pengiriman_detail_id' => $id,
             'pengiriman_id' => $last_arr[0]['pengiriman_id'],
-            'status_pengiriman' => 'BATAL',
+            'status_pengiriman' => $status,
             'nama_penerima' => $last_arr[0]['nama_penerima'],
             'tanda_tangan_penerima' => $last_arr[0]['tanda_tangan_penerima'],
             'tanda_tangan_pengirim' => $last_arr[0]['tanda_tangan_pengirim'],
@@ -78,12 +100,20 @@ class GlobalController extends Controller
             'gps' => $last_arr[0]['gps'],
             'gps_time' => $last_arr[0]['gps_time'],
             'note_title' => 'changed a deal',
-            'note' => 'Stage: from '.$last_arr[0]['status_pengiriman']. ' to BATAL. Last Move At : '.$time_now,
+            'note' => 'Stage: from '.$last_arr[0]['status_pengiriman']. ' to ' .$status. '. Last Move At : '.$time_now,
             'status_delete' => 0,
             'created_date' => $time_now,
             'created_by' => $user
         ];
 
+        foreach($arr as $key=>$value){
+            $saved = $model::updateOrCreate(
+                [$table_id => $id],
+                [$key => $value]
+            );
+        }
+
+        return response()->json(['success' => 'Data Updated Successfully.']);
 
     }
 }

@@ -96,7 +96,7 @@ class DetailController extends Controller
             'nama_surat_jalan' => $nama_surat_jalan
         ];
 
-        $result = $this->getloaddata(null, null, $parameter);
+        $result = $this->getloaddata(null, $parameter);
 
         return response()->json([
             'nama_surat_jalan'=>$result[0]['nama_surat_jalan'],

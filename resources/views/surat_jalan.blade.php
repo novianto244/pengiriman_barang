@@ -36,9 +36,9 @@
                 <div class="col-sm-4 text-right"><p id="total_pengiriman_baru" class="badge-total"></p></div>
             </div>
          
-            <div class="panel-body" >
+            <div class="panel-body">
                 {{ csrf_field() }}
-                <div id="post_data_baru" class="noDrop"></div>
+                <div id="post_data_baru"></div>
             </div>
         </div>
         <div id="div_berangkat" class="col-md-3 bordered-box" ondrop="drop(event)" ondragover="allowDrop(event)">  
@@ -50,7 +50,7 @@
           
             <div class="panel-body">
                 {{ csrf_field() }}
-                <div id="post_data_berangkat" class="noDrop"></div>
+                <div id="post_data_berangkat"></div>
             </div>
         </div>
         <div id="div_terkirim" class="col-md-3 bordered-box" ondrop="drop(event)" ondragover="allowDrop(event)">  
@@ -63,7 +63,7 @@
 
             <div class="panel-body">
                 {{ csrf_field() }}
-                <div id="post_data_terkirim" class="noDrop"></div>
+                <div id="post_data_terkirim"></div>
             </div>
         </div>
         <div id="div_batal" class="col-md-3 bordered-box" ondrop="drop(event)" ondragover="allowDrop(event)">  
@@ -75,7 +75,7 @@
 
             <div class="panel-body">
                 {{ csrf_field() }}
-                <div id="post_data_batal" class="noDrop"></div>
+                <div id="post_data_batal"></div>
             </div>
         </div>
     </div>
@@ -103,27 +103,11 @@
     function drop(event, target) {
         event.preventDefault();
 
-        // var target = event.target.id;
-        // var _target = $("#" + event.target.id);
-
-        // if ($(target).hasClass("noDrop")) {
-        //     alert('ga bisa drop');
-        // }else{
-        //     alert('bisa drop');
-        // }
-
-        // belom selesai
-
         var data = event.dataTransfer.getData("Text");
         var target = event.target.id;
 
-        event.target.appendChild(document.getElementById(data));
-
         if(target=="div_pengiriman_baru" || target=="div_berangkat" || target=="div_terkirim" || target=="div_batal" ){
             move_status(data, target);
-        }else{
-            alert("salah bung !");
-            $('#search_btn').trigger("click");
         }
     }
 

@@ -103,6 +103,7 @@
 
             <div class="container" style="padding:5px 5px 15px 5px; border-bottom:1px dashed gray;">
                 <button id="update_btn" type="button" class="btn btn-primary btn-sm"><i class="fa fa-save" style="margin-right:-15px;"></i>Update Surat Jalan</button>
+                <button id="kembali_btn" type="button" class="btn btn-success btn-sm"><i class="fa fa-angle-double-left" style="margin-right:-15px;"></i>Kembali</button>
                 <button id="batal_btn" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-window-close" style="margin-right:-15px;"></i>Batal</button>
                 <button id="hapus_btn" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash" style="margin-right:-15px;"></i>Hapus</button>
             </div>
@@ -297,38 +298,24 @@
 
                     switch(data.status_pengiriman){
                         case 'PENGIRIMAN BARU':
-                            $('#check_pengiriman_baru').prop('checked', true);
-                            $("#title_berangkat").css("color", "white");
-                            $("#title_terkirim").css("color", "white");
-                            $("#title_batal").css("color", "white");
-                            $("#line-1").css("background-color","#B2E6F5");
+                            statuscheckbox('pengiriman baru');
+                            titlecheckbox('pengiriman baru');
+                            linecolor('pengiriman_baru');
                             break;
                         case 'BERANGKAT':
-                            $('#check_pengiriman_baru').prop('checked', true);
-                            $('#check_berangkat').prop('checked', true);
-                            $("#title_terkirim").css("color", "white");
-                            $("#title_batal").css("color", "white");
-                            $("#line-1").css("background-color","#B2E6F5");
-                            $("#line-2").css("background-color","#8DD6F7");
+                            statuscheckbox('berangkat');
+                            titlecheckbox('berangkat');
+                            linecolor('berangkat');
                             break;
                         case 'TERKIRIM':
-                            $('#check_pengiriman_baru').prop('checked', true);
-                            $('#check_berangkat').prop('checked', true);
-                            $('#check_terkirim').prop('checked', true);
-                            $("#title_batal").css("color", "white");
-                            $("#line-1").css("background-color","#B2E6F5");
-                            $("#line-2").css("background-color","#8DD6F7");
-                            $("#line-3").css("background-color","#8DD6F7");
-                            $("#line-4").css("background-color","#5BC0DE");
+                            statuscheckbox('terkirim');
+                            titlecheckbox('terkirim');
+                            linecolor('terkirim');
                             break;
                         case 'BATAL':
-                            $('#check_batal').prop('checked', true);
-                            $("#line-1").css("background-color","#B7CEE9");
-                            $("#line-2").css("background-color","#B7CEE9");
-                            $("#line-3").css("background-color","#B7CEE9");
-                            $("#line-4").css("background-color","#B7CEE9");
-                            $("#line-5").css("background-color","#B7CEE9");
-                            $("#line-6").css("background-color","#B7CEE9");
+                            statuscheckbox('batal');
+                            titlecheckbox('batal');
+                            linecolor('batal');
                             break;
                     }
                 },
@@ -338,9 +325,325 @@
             })
         }
 
+        // Status check box
+        function statuscheckbox(status){
+            switch(status){
+                case 'pengiriman baru':
+                    $('#check_pengiriman_baru').prop('checked', true);
+                    $('#check_berangkat').prop('checked', false);
+                    $('#check_terkirim').prop('checked', false);
+                    $('#check_batal').prop('checked', false);
+                    break;
+                case 'berangkat':
+                    $('#check_pengiriman_baru').prop('checked', true);
+                    $('#check_berangkat').prop('checked', true);
+                    $('#check_terkirim').prop('checked', false);
+                    $('#check_batal').prop('checked', false);
+                    break;
+                case 'terkirim':
+                    $('#check_pengiriman_baru').prop('checked', true);
+                    $('#check_berangkat').prop('checked', true);
+                    $('#check_terkirim').prop('checked', true);
+                    $('#check_batal').prop('checked', false);
+                    break;
+                case 'batal':
+                    $('#check_pengiriman_baru').prop('checked', false);
+                    $('#check_berangkat').prop('checked', false);
+                    $('#check_terkirim').prop('checked', false);
+                    $('#check_batal').prop('checked', true);
+                    break;
+            }
+        }
+
+        // Title check box
+        function titlecheckbox(status){
+            switch(status){
+                case 'pengiriman baru':
+                    $("#title_pengiriman_baru").css("color", "#459081");
+                    $("#title_berangkat").css("color", "white");
+                    $("#title_terkirim").css("color", "white");
+                    $("#title_batal").css("color", "white");
+                    break;
+                case 'berangkat':
+                    $("#title_pengiriman_baru").css("color", "#459081");
+                    $("#title_berangkat").css("color", "#459081");
+                    $("#title_terkirim").css("color", "white");
+                    $("#title_batal").css("color", "white");
+                    break;
+                case 'terkirim':
+                    $("#title_pengiriman_baru").css("color", "#459081");
+                    $("#title_berangkat").css("color", "#459081");
+                    $("#title_terkirim").css("color", "#459081");
+                    $("#title_batal").css("color", "white");
+                    break;
+                case 'batal':
+                    $("#title_pengiriman_baru").css("color", "white");
+                    $("#title_berangkat").css("color", "white");
+                    $("#title_terkirim").css("color", "white");
+                    $("#title_batal").css("color", "#459081");
+                    break;
+            }
+        }
+
+        // Line Function
+        function linecolor(status){
+            switch(status){
+                case 'pengiriman_baru':
+                    $("#line-1").css("background-color","#B2E6F5");
+                    $("#line-2").css("background-color","#B7CEE9");
+                    $("#line-3").css("background-color","#B7CEE9");
+                    $("#line-4").css("background-color","#B7CEE9");
+                    $("#line-5").css("background-color","#B7CEE9");
+                    $("#line-6").css("background-color","#B7CEE9");
+                    break;
+                case 'berangkat':
+                    $("#line-1").css("background-color","#B2E6F5");
+                    $("#line-2").css("background-color","#8DD6F7");
+                    $("#line-3").css("background-color","#B7CEE9");
+                    $("#line-4").css("background-color","#B7CEE9");
+                    $("#line-5").css("background-color","#B7CEE9");
+                    $("#line-6").css("background-color","#B7CEE9");
+                    break;
+                case 'terkirim':
+                    $("#line-1").css("background-color","#B2E6F5");
+                    $("#line-2").css("background-color","#8DD6F7");
+                    $("#line-3").css("background-color","#8DD6F7");
+                    $("#line-4").css("background-color","#5BC0DE");
+                    $("#line-5").css("background-color","#B7CEE9");
+                    $("#line-6").css("background-color","#B7CEE9");
+                    break;
+                case 'batal':
+                    $("#line-1").css("background-color","#B7CEE9");
+                    $("#line-2").css("background-color","#B7CEE9");
+                    $("#line-3").css("background-color","#B7CEE9");
+                    $("#line-4").css("background-color","#B7CEE9");
+                    $("#line-5").css("background-color","#B7CEE9");
+                    $("#line-6").css("background-color","#B7CEE9");
+                    break;
+            }
+        }
+
+        /* ::::::::::: UPDATE Status by Check Box :::::::::::::::: */
+        $('#check_pengiriman_baru').change(function() {    
+            statuscheckbox('pengiriman baru');   
+            titlecheckbox('pengiriman baru');
+            linecolor('pengiriman baru');
+            
+            var str="Nama Surat Jalan  :  " + $('#title_nama_surat_jalan').val();
+            Swal.fire({
+                title: 'Anda yakin ingin mengubah status menjadi' +'\n'+ 'PENGIRIMAN BARU ?',
+                html: '<center>' + str + '</center>',
+                customClass: {
+                    popup: 'format-pre'
+                },
+                icon: 'warning',
+                showCancelButton: true
+            }).then((result)=>{
+                if(result.value){
+                    $.ajax({
+                        data: {
+                            tipe : 'surat_jalan',
+                            task : 'PENGIRIMAN BARU',
+                            surat_jalan : $('#title_nama_surat_jalan').val()
+                        },
+                        type: "POST",
+                        dataType: 'json',
+                        url: "{{ url('crud_update_status') }}",
+                        cache: false,
+                        success: function (data) {
+                            console.log('Success:', data);
+                            Swal.fire({
+                                title: 'Success !',
+                                text: 'Data berhasil diupdate.',
+                                icon: 'info',
+                                showConfirmButton:false,
+                            })
+                            setTimeout(function(){
+                                location.reload();
+                            },1000);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }else{
+                    location.reload();
+                }
+            })
+        });
+
+        $('#check_berangkat').change(function() {       
+            statuscheckbox('berangkat');   
+            titlecheckbox('berangkat');
+            linecolor('berangkat');
+
+            var str="Nama Surat Jalan  :  " + $('#title_nama_surat_jalan').val();
+            Swal.fire({
+                title: 'Anda yakin ingin mengubah status menjadi' +'\n'+ 'BERANGKAT ?',
+                html: '<center>' + str + '</center>',
+                customClass: {
+                    popup: 'format-pre'
+                },
+                icon: 'warning',
+                showCancelButton: true
+            }).then((result)=>{
+                if(result.value){
+                    $.ajax({
+                        data: {
+                            tipe : 'surat_jalan',
+                            task : 'BERANGKAT',
+                            surat_jalan : $('#title_nama_surat_jalan').val()
+                        },
+                        type: "POST",
+                        dataType: 'json',
+                        url: "{{ url('crud_update_status') }}",
+                        cache: false,
+                        success: function (data) {
+                            console.log('Success:', data);
+                            Swal.fire({
+                                title: 'Success !',
+                                text: 'Data berhasil diupdate.',
+                                icon: 'info',
+                                showConfirmButton:false,
+                            })
+                            setTimeout(function(){
+                                location.reload();
+                            },1000);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }else{
+                    location.reload();
+                }
+            })
+        });
+
+        $('#check_terkirim').change(function() {       
+            statuscheckbox('terkirim');   
+            titlecheckbox('terkirim');
+            linecolor('terkirim');
+
+            var str="Nama Surat Jalan  :  " + $('#title_nama_surat_jalan').val();
+            Swal.fire({
+                title: 'Anda yakin ingin mengubah status menjadi' +'\n'+ 'TERKIRIM ?',
+                html: '<center>' + str + '</center>',
+                customClass: {
+                    popup: 'format-pre'
+                },
+                icon: 'warning',
+                showCancelButton: true
+            }).then((result)=>{
+                if(result.value){
+                    $.ajax({
+                        data: {
+                            tipe : 'surat_jalan',
+                            task : 'TERKIRIM',
+                            surat_jalan : $('#title_nama_surat_jalan').val()
+                        },
+                        type: "POST",
+                        dataType: 'json',
+                        url: "{{ url('crud_update_status') }}",
+                        cache: false,
+                        success: function (data) {
+                            console.log('Success:', data);
+                            Swal.fire({
+                                title: 'Success !',
+                                text: 'Data berhasil diupdate.',
+                                icon: 'info',
+                                showConfirmButton:false,
+                            })
+                            setTimeout(function(){
+                                location.reload();
+                            },1000);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }else{
+                    location.reload();
+                }
+            })
+        });
+
+        $('#check_batal').change(function() {       
+            statuscheckbox('batal');   
+            titlecheckbox('batal');
+            linecolor('batal');
+
+            var str="Nama Surat Jalan  :  " + $('#title_nama_surat_jalan').val();
+            Swal.fire({
+                title: 'Anda yakin ingin mengubah status menjadi' +'\n'+ 'BATAL ?',
+                html: '<center>' + str + '</center>',
+                customClass: {
+                    popup: 'format-pre'
+                },
+                icon: 'warning',
+                showCancelButton: true
+            }).then((result)=>{
+                if(result.value){
+                    $.ajax({
+                        data: {
+                            tipe : 'surat_jalan',
+                            task : 'BATAL',
+                            surat_jalan : $('#title_nama_surat_jalan').val()
+                        },
+                        type: "POST",
+                        dataType: 'json',
+                        url: "{{ url('crud_update_status') }}",
+                        cache: false,
+                        success: function (data) {
+                            console.log('Success:', data);
+                            Swal.fire({
+                                title: 'Success !',
+                                text: 'Data berhasil diupdate.',
+                                icon: 'info',
+                                showConfirmButton:false,
+                            })
+                            setTimeout(function(){
+                                location.reload();
+                            },1000);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }else{
+                    location.reload();
+                }
+            })
+        });
+
         // Update Data
         $('#update_btn').click(function(){
-            alert("update");
+            $.ajax({
+                url:"{{ url('move_status_sj') }}",
+                method:"POST",
+                cache: false,
+                data:{
+                    nik: $('#nik').val(),
+                    nama_surat_jalan : nama_surat_jalan,
+                    target : target    
+                },
+                success:function(data){
+                    $('#search_btn').trigger("click");
+                    console.log('Success:', data);
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            })
+        });
+
+        // Kembali
+        $('#kembali_btn').click(function(){
+            window.location.href='surat_jalan' + '-' + 
+            [
+                'surat_jalan',
+                $('#nik').val(),
+            ];
         });
         
         // Batal
@@ -360,12 +663,12 @@
                     $.ajax({
                         data: {
                             tipe : 'surat_jalan',
-                            task : 'batal',
+                            task : 'BATAL',
                             surat_jalan : surat_jalan
                         },
                         type: "POST",
                         dataType: 'json',
-                        url: "{{ url('crud_update') }}",
+                        url: "{{ url('crud_update_status') }}",
                         cache: false,
                         success: function (data) {
                             console.log('Success:', data);
@@ -383,12 +686,8 @@
                             $('#check_berangkat').prop('checked', false);
                             $('#check_terkirim').prop('checked', false);
                             $('#check_batal').prop('checked', true);
-                            $("#line-1").css("background-color","#B7CEE9");
-                            $("#line-2").css("background-color","#B7CEE9");
-                            $("#line-3").css("background-color","#B7CEE9");
-                            $("#line-4").css("background-color","#B7CEE9");
-                            $("#line-5").css("background-color","#B7CEE9");
-                            $("#line-6").css("background-color","#B7CEE9");
+
+                            linecolor('batal');
                         },
                         error: function (data) {
                             console.log('Error:', data);
@@ -397,6 +696,7 @@
                 }
             })
         });
+
         // Hapus Data
         $('#hapus_btn').click(function(){
             var surat_jalan = $('#title_nama_surat_jalan').val();
