@@ -43,6 +43,9 @@
     <!-- Custom Function Datatables -->
     <script type="text/javascript" src="assets/jquery/function-custom.js"></script>
 
+    <!-- Signature -->
+    <script type="text/javascript" src="assets/jquery/signature.js"></script>
+
     <!-- MD5 -->
     <script src="assets/jquery/jquery.md5.min.js"></script>
 

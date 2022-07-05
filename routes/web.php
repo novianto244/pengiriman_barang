@@ -40,4 +40,5 @@ Route::group(['middleware' => 'checklogin'], function () {
      Route::post('crud_delete', [CrudController::class, 'crud_delete']);
      Route::post('crud_update_status', [CrudController::class, 'crud_update_status']);
      Route::post('crud_update', [CrudController::class, 'crud_update']);
+     Route::post('crud_form_image', [CrudController::class, 'crud_form_image']);
 });

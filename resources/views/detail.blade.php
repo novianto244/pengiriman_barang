@@ -70,11 +70,29 @@
                         <label class="inp-title">Alamat Pengiriman</label>
                         <textarea class="form-control rounded-0 inp" id="alamat_pengiriman" name="alamat_pengiriman" rows="3"></textarea>
 
-                        <label class="inp-title">Nama Penerima</label>
-                        <input type="text" id="nama_penerima" name="nama_penerima" class="inp">
+                        <form action="{{ url('crud_form_image') }}" method="post" enctype="multipart/form-data">
+                            {{ csrf_field() }}         
+                            <input type="text" id="penerima_nama_surat_jalan" name="penerima_nama_surat_jalan" value="{{ $data['nama_surat_jalan'] }}" class="form-control-sm" hidden readonly>   
+                            <label class="inp-title">Nama Penerima<span class="required">*</span></label>
+                            <input type="text" id="nama_penerima" name="nama_penerima" class="inp" required>
 
-                        <label class="inp-title">Tanda Tangan Penerima</label>
-                        <div id="div_ttd_penerima"></div>
+                            <label class="inp-title">Tanda Tangan Penerima</label>
+                            <div id="div_ttd_penerima_exist"></div>
+                            
+                            <div id="div_ttd_penerima_new">
+                                <div id="signature-pad">
+                                    <div style="border:solid 1px teal; width:235px; height:185px; padding:3px;position:relative;">
+                                        <div id="note" onmouseover="my_function();" style="color:gray; font-size:11px;">The signature should be inside box</div>
+                                        <canvas id="the_canvas" width="225px" height="175px"></canvas>
+                                    </div>
+                                    <div style="margin:10px;">
+                                        <input type="hidden" id="signature" name="signature">
+                                        <button type="button" id="clear_btn" class="btn btn-danger" data-action="clear"><i class="fa fa-eraser" style="margin-right:-15px;"></i> Clear</button>
+                                        <button type="submit" id="save_btn" class="btn btn-primary" data-action="save-png"><i class="fa fa-save" style="margin-right:-15px;"></i> Save as PNG</button>
+                                    </div>
+                                </div>
+                            </div>
+                        <form>
 
                         <label class="inp-title">Tanda Tangan Pengirim</label>
                         <div id="div_ttd_pengirim"></div>
@@ -135,6 +153,10 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        function my_function(){
+            document.getElementById("note").innerHTML="";
+        }
 
         // Datepicker format
         $(".datepicker").datepicker({
@@ -242,16 +264,41 @@
                     data.gps != null? $('#gps').val(data.gps + "\n\n" + data.gps_time) : $('#gps').val('');
 
                     if(data.tanda_tangan_penerima != null){
-                        $('#div_ttd_penerima').append(
-                            "<img class='inp' id='tanda_tangan_penerima' style='max-height:100%; max-width:100%' src='gambar/"+ data.tanda_tangan_penerima + "'" + "title='Click to enlarge image !' alt=''>"
+                        $('#div_ttd_penerima_exist').append(
+                            "<img class='inp' id='tanda_tangan_penerima' style='max-height:100%; max-width:100%;' src='gambar/"+ data.tanda_tangan_penerima + "'" + "title='Click to enlarge image !' alt=''>"
                         );
+                        $('#div_ttd_penerima_new').hide();
                     }else{
-                        // Belum selesai
-                        $('#div_ttd_penerima').append(
-                            "<input type='text' id='tanda_tangan_penerima' name='tanda_tangan_penerima' class='inp'>"
-                        );
+                        var wrapper = document.getElementById("signature-pad");
+                        var clearButton = wrapper.querySelector("[data-action=clear]");
+                        var savePNGButton = wrapper.querySelector("[data-action=save-png]");
+                        var canvas = wrapper.querySelector("canvas");
+                        var el_note = document.getElementById("note");
+                        var signaturePad;
+                        signaturePad = new SignaturePad(canvas);
+
+                        clearButton.addEventListener("click", function (event) {
+                            document.getElementById("note").innerHTML="The signature should be inside box";
+                            signaturePad.clear();
+                        });
+
+                        savePNGButton.addEventListener("click", function (event){
+                            if (signaturePad.isEmpty()){
+                                alert("Please provide signature first.");
+                                event.preventDefault();
+                            }
+                            else{
+                                var canvas  = document.getElementById("the_canvas");
+                                var dataUrl = canvas.toDataURL();
+                                document.getElementById("signature").value = dataUrl;
+                            }
+                        });
+                       
                     }
 
+                        
+
+                    
                     if(data.tanda_tangan_pengirim != null){
                         $('#div_ttd_pengirim').append(
                             "<img class='inp' id='tanda_tangan_pengirim' style='max-height:100%; max-width:100%' src='gambar/"+ data.tanda_tangan_pengirim + "'" + "title='Click to enlarge image !' alt=''>"
@@ -624,8 +671,16 @@
                 cache: false,
                 data:{
                     nik: $('#nik').val(),
-                    nama_surat_jalan : nama_surat_jalan,
-                    target : target    
+                    nama_penerima: $('#nama_penerima').val(),
+                    // tanda_tangan_penerima: $('#').val(),
+                    // tanda_tangan_pengirim: $('#').val(),
+                    // foto_barang_penerima: $('#').val(),
+                    // foto_barang2: $('#').val(),
+                    // foto_surat_jalan: $('#').val(),
+                    // gps: $('#').val(),
+                    // gps_time: $('#').val(),
+                    // note_title: $('#').val(),
+                    // note: $('#').val()
                 },
                 success:function(data){
                     $('#search_btn').trigger("click");
